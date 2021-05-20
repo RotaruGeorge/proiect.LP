@@ -3,13 +3,9 @@ import numpy as np
 from tkinter import *
 from tkinter import filedialog
 import os
-import tkinter as tkimport
-import numpy as np
-from tkinter import *
-from tkinter import filedialog
-import os
 import tkinter as tk
 from PIL import Image, ImageTk
+from PIL import Image, ImageFont, ImageDraw
 
 def stackImages(scale,imgArray):
     rows = len(imgArray)
@@ -67,68 +63,12 @@ def showimage():
 
     StackedImages = stackImages(0.6,([img,image_Gray,image_XYZ,image_LAB],[image_YUL,image_BGR,image_HLS,image_HSV]))
     cv2.imshow("Tipuri de spatiu de culoare", StackedImages)
+    img = Image.open("",image_Gray)
+    title_font = ImageFont.truetype('arial', 24)
 
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-root = Tk()
-
-frm = Frame(root)
-frm.pack(side=BOTTOM, padx=15, pady=15)
-
-lbl= Label(root)
-lbl.pack()
-
-btn = Button(frm, text="Cauta imagine",command=showimage)
-btn.pack(side=tk.LEFT)
-
-btn = Button(frm, text="Exit",command=lambda: exit())
-btn.pack(side=tk.LEFT, padx=10)
-
-
-
-root.title("Imagine RGB")
-root.geometry("300x500")
-root.mainloop()
-
-
-from PIL import Image, ImageTk
-
-def showimage():
-    fln = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select image file", filetypes=(("JPG File", "*.jpg"), ("PNG file", "*.png"), ("All File", "*.*")))
-    img = Image.open(fln)
-    img.thumbnail((350,350))
-    img = ImageTk.PhotoImage(img)
-    lbl.configure(image=img)
-    lbl.image = img
-
-
-    img=cv2.imread(fln)
-    img = cv2.resize(img, (0, 0), None, .3, .3)
-
-    image_XYZ = cv2.cvtColor(img, cv2.COLOR_RGB2XYZ)
-    numpy_horizontal_concat = np.concatenate((img, image_XYZ), axis=1)
-    cv2.imshow('Numpy Horizontal ', numpy_horizontal_concat)
-
-    image_LAB = cv2.cvtColor(img, cv2.COLOR_RGB2LAB)
-    numpy_horizontal_concat = np.concatenate((image_XYZ, image_LAB), axis=1)
-    cv2.imshow('Numpy Horizontal ', numpy_horizontal_concat)
-
-    image_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-    numpy_horizontal_concat = np.concatenate((image_LAB, image_BGR), axis=1)
-
-    cv2.imshow('Numpy Horizontal ', numpy_horizontal_concat)
-
-    image_HSV = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-    window_name='Imagine_HSV'
-    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.imshow(window_name,image_HSV)
-
-    image_HLS = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
-    window_name='Imagine_HLS'
-    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.imshow(window_name,image_HLS)
+    draw = ImageDraw.Draw(image_Gray)
+    draw.text((0, 0),"Hello world",(255,255,255),font=font)
+    image_Gray.save("result.jpg")
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
@@ -152,4 +92,3 @@ btn.pack(side=tk.LEFT, padx=10)
 root.title("Imagine RGB")
 root.geometry("300x500")
 root.mainloop()
-
