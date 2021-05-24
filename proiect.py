@@ -66,9 +66,7 @@ def showimage():
     img = Image.open("",image_Gray)
     title_font = ImageFont.truetype('arial', 24)
 
-    draw = ImageDraw.Draw(image_Gray)
-    draw.text((0, 0),"Hello world",(255,255,255),font=font)
-    image_Gray.save("result.jpg")
+    
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
